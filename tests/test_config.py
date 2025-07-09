@@ -208,5 +208,6 @@ class TestConfig(unittest.TestCase):
                 ),
             },
             base_directory="/repos",
+            mirror_dir=None,
         )
         self.assertEqual(config, expected_config)

@@ -171,6 +171,7 @@ class KPDConfig:
     branches: Dict[str, BranchConfig]
     tag_to_branch_mapping: Dict[str, List[str]]
     base_directory: str
+    mirror_dir: Optional[str] = None
 
     @classmethod
     def from_json(cls, json: Dict) -> "KPDConfig":
@@ -203,6 +204,7 @@ class KPDConfig:
                 for name, json_config in json["branches"].items()
             },
             base_directory=json["base_directory"],
+            mirror_dir=json.get("mirror_dir"),
         )
 
     @classmethod
