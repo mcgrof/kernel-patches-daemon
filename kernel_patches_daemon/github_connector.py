@@ -89,11 +89,7 @@ class GithubConnector:
             self.github_account_name = gh_user.login
         else:
             self.auth_type = AuthType.APP_AUTH
-            app = GithubIntegration(
-                auth=Auth.AppAuth(
-                    app_id=app_auth.app_id, private_key=app_auth.private_key
-                )
-            ).get_app()
+            app = GithubIntegration(auth=app_auth._app_auth).get_app()
             self.github_account_name = app.name
             # Github appends '[bot]' suffix to the NamedUser
             # >>> pull.user
