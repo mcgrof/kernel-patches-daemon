@@ -247,7 +247,9 @@ class TestGithubConnectorAuth(unittest.TestCase):
         """
         Verifies that `AppInstallationAuth.token` does renew an expired token.
         """
-        now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE)
+        now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE).replace(
+            tzinfo=datetime.timezone.utc
+        )
         expired_at_date = now + datetime.timedelta(hours=2)
         expired_at_next = expired_at_date + datetime.timedelta(hours=2)
         side_effect = [
@@ -282,7 +284,9 @@ class TestGithubConnectorAuth(unittest.TestCase):
         Verifies that `Requester._refresh_token_if_needed` does not renew a token
         which is not expired yet.
         """
-        now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE)
+        now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE).replace(
+            tzinfo=datetime.timezone.utc
+        )
         expired_at_date = now + datetime.timedelta(hours=2)
         expired_at_next = expired_at_date + datetime.timedelta(hours=2)
         side_effect = [
@@ -318,7 +322,9 @@ class TestGithubConnectorAuth(unittest.TestCase):
         reflect the current token, while when using oauth authentication, the
         repo_url stays the same as provided by the caller upon initialization.
         """
-        now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE)
+        now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE).replace(
+            tzinfo=datetime.timezone.utc
+        )
         expired_at_date = now + datetime.timedelta(hours=2)
         expired_at_next = expired_at_date + datetime.timedelta(hours=2)
         side_effect = [
@@ -369,7 +375,9 @@ class TestGithubConnectorAuth(unittest.TestCase):
         Verifies that when user:token is not initially present in the `repo_url`,
         the user:token from the gh app is inserted into the url's netloc.
         """
-        now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE)
+        now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE).replace(
+            tzinfo=datetime.timezone.utc
+        )
         expired_at_date = now + datetime.timedelta(hours=2)
         side_effect = [
             munch.munchify({"token": "token1", "expires_at": expired_at_date}),
@@ -423,7 +431,9 @@ class TestGithubConnectorAuth(unittest.TestCase):
         ]
         for case in test_cases:
             with self.subTest(msg=case.name):
-                now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE)
+                now = datetime.datetime.fromisoformat(DEFAULT_FREEZE_DATE).replace(
+                    tzinfo=datetime.timezone.utc
+                )
                 expired_at_date = now + datetime.timedelta(hours=2)
                 side_effect = [
                     munch.munchify({"token": "token1", "expires_at": expired_at_date}),
